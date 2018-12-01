@@ -3,10 +3,8 @@ from itertools import cycle
 
 
 class FreqCalc:
-    def __init__(self, orig=None):
+    def __init__(self):
         self._changes = [0]
-        if orig:
-            self._changes = [orig.value]
 
     def append(self, nv: int):
         self._changes.append(nv)
