@@ -1,11 +1,13 @@
 import fileinput
 from collections import defaultdict
 
+
 def process_claim(claim):
     claim_id, _, loc, size = claim.split()
-    loc = [int(d) for d in loc[:-1].split(',')]
-    size = [int(d) for d in size.split('x')]
+    loc = [int(d) for d in loc[:-1].split(",")]
+    size = [int(d) for d in size.split("x")]
     return claim_id, loc, size
+
 
 if __name__ == "__main__":
     fabric = defaultdict(list)
@@ -23,5 +25,9 @@ if __name__ == "__main__":
                             claims.remove(bad_claim)
                         except ValueError:
                             continue
-    print("Squares with multiple claims: {}".format(len(list(filter(lambda sq: len(sq) > 1, fabric.values())))))
+    print(
+        "Squares with multiple claims: {}".format(
+            len(list(filter(lambda sq: len(sq) > 1, fabric.values())))
+        )
+    )
     print("Claims with no overlap: {}".format(claims))
