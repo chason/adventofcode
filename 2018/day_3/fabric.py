@@ -9,25 +9,25 @@ def process_claim(claim):
     return claim_id, loc, size
 
 
-if __name__ == "__main__":
-    fabric = defaultdict(list)
-    claims = []
+def main():
+    fabric = defaultdict(set)
+    claims = set()
     for line in fileinput.input():
         claim = process_claim(line.strip())
-        claims.append(claim[0])
+        claims.add(claim[0])
         for x in range(claim[1][0], claim[1][0] + claim[2][0]):
             for y in range(claim[1][1], claim[1][1] + claim[2][1]):
                 square_id = f"{x},{y}"
-                fabric[square_id].append(claim[0])
+                fabric[square_id].add(claim[0])
                 if len(fabric[square_id]) > 1:
-                    for bad_claim in fabric[square_id]:
-                        try:
-                            claims.remove(bad_claim)
-                        except ValueError:
-                            continue
+                    claims -= fabric[square_id]
     print(
         "Squares with multiple claims: {}".format(
             len(list(filter(lambda sq: len(sq) > 1, fabric.values())))
         )
     )
     print("Claims with no overlap: {}".format(claims))
+
+
+if __name__ == "__main__":
+    main()
